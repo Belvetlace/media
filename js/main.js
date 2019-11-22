@@ -50,7 +50,7 @@ window.onload = function() {
 	};
 
 	var mediaIsPlayingOrJustPaused = function(event) {
-		console.log("mediaIsPlayingOrJustPaused called with event:", event, event.target.id);
+		console.log("mediaIsPlayingOrJustPaused called with event:", event.type, event.target.id);
 		/*
 		 * TODO: Now that a media element is playing or just paused set the
 		 * appropriate button's content to 'Pause' or to 'Play' by calling
@@ -78,8 +78,11 @@ window.onload = function() {
 		 * function by triggering a playing or a pause event.
 		 */
 		event.target.currentTime = 0;
-		//syncPlayOrPauseButtonWithMedia
-
+		if (event.target.id === 'video') {
+			syncPlayOrPauseButtonWithMedia(event.target, playOrPauseVideoButton);
+		} else {
+			syncPlayOrPauseButtonWithMedia(event.target, playOrPauseAudioButton);
+		}
 	};
 
 	/*
@@ -101,10 +104,8 @@ window.onload = function() {
 	playOrPauseVideoButton.onclick = function(event) {
 		// TODO: Add your code here to play or pause the video
 		if (video.paused) {
-			//console.log('video.paused: ' + video.paused);
 			video.play();
 		} else {
-			//console.log('video.paused: ' + video.paused);
 			video.pause();
 		}
 
@@ -121,7 +122,13 @@ window.onload = function() {
 
 	playOrPauseAudioButton.onclick = function(event) {
 		// TODO: Add your code here to play or pause the audio
-
+		if (audio.paused) {
+			//console.log('video.paused: ' + video.paused);
+			audio.play();
+		} else {
+			//console.log('video.paused: ' + video.paused);
+			audio.pause();
+		}
 		syncPlayOrPauseButtonWithMedia(audio, this);
 	};
 
@@ -130,7 +137,8 @@ window.onload = function() {
 		 * TODO: Add your code here to stop the media element See:
 		 * https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Video_and_audio_APIs#Stopping_the_video
 		 */
-
+		mediaElement.pause();
+		mediaElement.currentTime = 0;
 	};
 
 	stopVideoButton.onclick = function(event) {
@@ -138,6 +146,7 @@ window.onload = function() {
 		 * TODO: Stop the media element by calling stop(mediaElement) and then
 		 * set the video's play/pause button's innerHTML to 'Play'.
 		 */
+		stop(video);
 
 	};
 
@@ -146,6 +155,7 @@ window.onload = function() {
 		 * TODO: Stop the media element by calling stop(mediaElement) and then
 		 * set the audio's play/pause button's innerHTML to 'Play'.
 		 */
+		stop(audio);
 
 	};
 
