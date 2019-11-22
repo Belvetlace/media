@@ -37,6 +37,26 @@ window.onload = function() {
 	var decreaseAudioVolumeButton = document
 			.getElementById("decreaseAudioVolumeButton");
 
+	//funcion for video event listeners
+	var videoEventHandlerFunct = function(event) {
+		console.log("The " + this.id + " media object is " + event.type + ".");
+		mediaIsPlayingOrJustPaused(event);
+	};
+	//video event listeners
+	video.addEventListener('play', videoEventHandlerFunct, false);
+	video.addEventListener('pause', videoEventHandlerFunct, false);
+	video.addEventListener('ended', mediaHasJustEnded, false);
+
+	//funcion for audio event listeners
+	var audioEventHandlerFunct = function(event) {
+		console.log("The " + this.id + " media object is " + event.type + ".");
+		mediaIsPlayingOrJustPaused(event);
+	};
+	//audio event listeners
+	audio.addEventListener('play', audioEventHandlerFunct, false);
+	audio.addEventListener('pause', audioEventHandlerFunct, false);
+	audio.addEventListener('ended', mediaHasJustEnded, false);
+
 
 	var syncPlayOrPauseButtonWithMedia = function(mediaElement, button) {
 		/*
@@ -45,8 +65,6 @@ window.onload = function() {
 		 */
 		button.innerHTML = (mediaElement.paused) ? 'Play' : 'Pause';
 		console.log("syncPlayOrPauseButtonWithMedia called " + mediaElement + " " + button);
-
-
 	};
 
 	var mediaIsPlayingOrJustPaused = function(event) {
@@ -92,15 +110,6 @@ window.onload = function() {
 	 * 'pause' events and call our mediaHasJustEnded(event) function in reaction
 	 * to the 'ended' event.
 	 */
-	var videoEventHandlerFunct = function(event) {
-		//console.log("The " + this.id + " media object is " + event.type + ".");
-		mediaIsPlayingOrJustPaused(event);
-	};
-
-	video.addEventListener('play', videoEventHandlerFunct, false);
-	video.addEventListener('pause', videoEventHandlerFunct, false);
-	video.addEventListener('ended', mediaHasJustEnded, false);
-
 	playOrPauseVideoButton.onclick = function(event) {
 		// TODO: Add your code here to play or pause the video
 		if (video.paused) {
@@ -111,14 +120,6 @@ window.onload = function() {
 
 		//syncPlayOrPauseButtonWithMedia(video, this);
 	};
-
-	var audioEventHandlerFunct = function(event) {
-		console.log("The " + this.id + " media object is " + event.type + ".");
-		mediaIsPlayingOrJustPaused(event);
-	};
-	audio.addEventListener('play', audioEventHandlerFunct, false);
-	audio.addEventListener('pause', audioEventHandlerFunct, false);
-	audio.addEventListener('ended', mediaHasJustEnded, false);
 
 	playOrPauseAudioButton.onclick = function(event) {
 		// TODO: Add your code here to play or pause the audio
@@ -166,6 +167,13 @@ window.onload = function() {
 		 * an error) and set the volume to 1.0 if the current volume is too
 		 * close to 1.0
 		 */
+		if (mediaElement.volume < 1.0) {
+			mediaElement.volume += 0.05;
+		}
+		if (mediaElement.volume > 0.99){
+			mediaElement.volume = 1.0;
+		}
+
 
 	};
 
@@ -184,6 +192,12 @@ window.onload = function() {
 		 * an error) and set the volume to 0.0 if the current volume is too
 		 * close to 0.0
 		 */
+		if (mediaElement.volume > 0) {
+			mediaElement.volume -= 0.05;
+		}
+		if (mediaElement.volume < 0.01){
+			mediaElement.volume = 0;
+		}
 
 	};
 
