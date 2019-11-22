@@ -167,12 +167,12 @@ window.onload = function() {
 		 * an error) and set the volume to 1.0 if the current volume is too
 		 * close to 1.0
 		 */
-		if (mediaElement.volume < 1.0) {
+		if (mediaElement.volume < 0.95) {
 			mediaElement.volume += 0.05;
-		}
-		if (mediaElement.volume > 0.99){
+		} else {
 			mediaElement.volume = 1.0;
 		}
+		console.log("volume", mediaElement.volume);
 
 
 	};
@@ -192,13 +192,14 @@ window.onload = function() {
 		 * an error) and set the volume to 0.0 if the current volume is too
 		 * close to 0.0
 		 */
-		if (mediaElement.volume > 0) {
+		if (mediaElement.volume >= 0.05) {
 			mediaElement.volume -= 0.05;
-		}
-		if (mediaElement.volume < 0.01){
+		} else if (mediaElement.volume > 0.03) {
+			mediaElement.volume -= 0.01;
+		} else {
 			mediaElement.volume = 0;
 		}
-
+		console.log("volume", mediaElement.volume);
 	};
 
 	decreaseVideoVolumeButton.onclick = function(event) {
