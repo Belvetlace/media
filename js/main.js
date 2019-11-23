@@ -47,20 +47,20 @@ window.onload = function() {
     
     var mediaIsPlayingOrJustPaused = function(event) {
         console.log("mediaIsPlayingOrJustPaused called with event:", event);
-		/*
-		 * TODO: Now that a media element is playing or just paused set the
-		 * appropriate button's content to 'Pause' or to 'Play' by calling
-		 * syncPlayOrPauseButtonWithMedia with the correct parameters. Remember
-		 * both the keyword 'this' and the 'event.target' object refer to
-		 * whatever HTML Media Element called the mediaIsPlayingOrJustPaused
-		 * function by triggering a playing or a pause event.
-		 */
+        /*
+         * TODO: Now that a media element is playing or just paused set the
+         * appropriate button's content to 'Pause' or to 'Play' by calling
+         * syncPlayOrPauseButtonWithMedia with the correct parameters. Remember
+         * both the keyword 'this' and the 'event.target' object refer to
+         * whatever HTML Media Element called the mediaIsPlayingOrJustPaused
+         * function by triggering a playing or a pause event.
+         */
         if (event.id === "video") {
             syncPlayOrPauseButtonWithMedia(event, playOrPauseVideoButton);
         } else {
             syncPlayOrPauseButtonWithMedia(event, playOrPauseAudioButton);
         }
-	};
+    };
     
        var mediaHasJustEnded = function(event) {
         console.log("mediaHasJustEnded called with event:", event);
@@ -81,12 +81,12 @@ window.onload = function() {
     };
 
      /*
-	 * TODO: DO THIS FIRST (after reading the instructions at the top of this
-	 * file). Use addEventListener to bind video and audio elements to call our
-	 * mediaIsPlayingOrJustPaused(event) function in reaction to 'play' and
-	 * 'pause' events and call our mediaHasJustEnded(event) function in reaction
-	 * to the 'ended' event.
-	 */
+     * TODO: DO THIS FIRST (after reading the instructions at the top of this
+     * file). Use addEventListener to bind video and audio elements to call our
+     * mediaIsPlayingOrJustPaused(event) function in reaction to 'play' and
+     * 'pause' events and call our mediaHasJustEnded(event) function in reaction
+     * to the 'ended' event.
+     */
     //video event listeners
     video.addEventListener("play", function(){ mediaIsPlayingOrJustPaused(this); }, false);
     video.addEventListener("pause", function(){ mediaIsPlayingOrJustPaused(this); }, false);
