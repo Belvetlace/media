@@ -38,8 +38,8 @@ window.onload = function() {
     
     var syncPlayOrPauseButtonWithMedia = function(mediaElement, button) {
         /*
-        * TODO: Set the button's innerHTML to 'Pause' or 'Play' depending on if
-        * the media element is paused or not.
+         * button's innerHTML set to 'Pause' or 'Play' depending on if
+         * the media element is paused or not.
         */
         button.innerHTML = (mediaElement.paused) ? "Play" : "Pause";
         console.log("syncPlayOrPauseButtonWithMedia called " + mediaElement + " " + button);
@@ -48,12 +48,8 @@ window.onload = function() {
     var mediaIsPlayingOrJustPaused = function(event) {
         console.log("mediaIsPlayingOrJustPaused called with event:", event);
         /*
-         * TODO: Now that a media element is playing or just paused set the
-         * appropriate button's content to 'Pause' or to 'Play' by calling
-         * syncPlayOrPauseButtonWithMedia with the correct parameters. Remember
-         * both the keyword 'this' and the 'event.target' object refer to
-         * whatever HTML Media Element called the mediaIsPlayingOrJustPaused
-         * function by triggering a playing or a pause event.
+         * when the media is playing or just paused calls
+         * syncPlayOrPauseButtonWithMedia with parameters (mediaElement, button)
          */
         if (event.id === "video") {
             syncPlayOrPauseButtonWithMedia(event, playOrPauseVideoButton);
@@ -65,12 +61,8 @@ window.onload = function() {
        var mediaHasJustEnded = function(event) {
         console.log("mediaHasJustEnded called with event:", event);
         /*
-         * TODO: Now that the media element has stopped playing set the
-         * appropriate button's content to 'Play' by calling
-         * syncPlayOrPauseButtonWithMedia with the correct parameters. Remember
-         * both the keyword 'this' and the 'event.target' object refer to
-         * whatever HTML Media Element called the mediaIsPlayingOrJustPaused
-         * function by triggering a playing or a pause event.
+         * appropriate button's content is set to 'Play' by calling
+         * syncPlayOrPauseButtonWithMedia with parameters: (mediaElement, button).
          */
         event.target.currentTime = 0;
         if (event.target.id === "video") {
@@ -81,11 +73,9 @@ window.onload = function() {
     };
 
      /*
-     * TODO: DO THIS FIRST (after reading the instructions at the top of this
-     * file). Use addEventListener to bind video and audio elements to call our
-     * mediaIsPlayingOrJustPaused(event) function in reaction to 'play' and
-     * 'pause' events and call our mediaHasJustEnded(event) function in reaction
-     * to the 'ended' event.
+      * Binding video and audio elements
+      * call mediaIsPlayingOrJustPaused(event) in reaction to 'play' and 'pause' events
+      * and call our mediaHasJustEnded(event) in reaction to the 'ended' event.
      */
     //video event listeners
     video.addEventListener("play", function(){ mediaIsPlayingOrJustPaused(this); }, false);
@@ -100,7 +90,7 @@ window.onload = function() {
     
     
     playOrPauseVideoButton.onclick = function(event) {
-        // TODO: Add your code here to play or pause the video
+        // video is set to play or pause on button click
         if (video.paused) {
             video.play();
         } else {
@@ -110,12 +100,10 @@ window.onload = function() {
     };
 
     playOrPauseAudioButton.onclick = function(event) {
-        // TODO: Add your code here to play or pause the audio
+        // audio is set to play or pause on button click
         if (audio.paused) {
-            //console.log('video.paused: ' + video.paused);
             audio.play();
         } else {
-            //console.log('video.paused: ' + video.paused);
             audio.pause();
         }
         syncPlayOrPauseButtonWithMedia(audio, this);
@@ -123,8 +111,7 @@ window.onload = function() {
 
     var stop = function(mediaElement) {
         /*
-         * TODO: Add your code here to stop the media element See:
-         * https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Video_and_audio_APIs#Stopping_the_video
+         * media element is stopped and set to the beginning
          */
         mediaElement.pause();
         mediaElement.currentTime = 0;
@@ -132,28 +119,27 @@ window.onload = function() {
 
     stopVideoButton.onclick = function(event) {
         /*
-         * TODO: Stop the media element by calling stop(mediaElement) and then
-         * set the video's play/pause button's innerHTML to 'Play'.
+         * media element is stopped by calling stop(mediaElement).
+         * video's play/pause button's set to 'Play' by event listeners.
          */
         stop(video);
-        playOrPauseVideoButton.innerHTML = "Play";
+        //playOrPauseVideoButton.innerHTML = "Play";
     };
 
     stopAudioButton.onclick = function(event) {
         /*
-         * TODO: Stop the media element by calling stop(mediaElement) and then
-         * set the audio's play/pause button's innerHTML to 'Play'.
+         * media element stopped by calling stop(mediaElement).
+         * audio's play/pause button's set to 'Play' by event listeners.
          */
         stop(audio);
-        playOrPauseAudioButton.innerHTML = "Play";
+        //playOrPauseAudioButton.innerHTML = "Play";
     };
 
     var increaseVolume = function(mediaElement) {
         /*
-         * TODO: Increase the volume property of the media element ONLY when it
-         * is safe (don't go higher than a volume of 1.0 because that will cause
-         * an error) and set the volume to 1.0 if the current volume is too
-         * close to 1.0
+         * Volume property of the media element  increased ONLY when it
+         * is loweer than 1.0
+         * Volume is set to 1.0 if the current volume is too close to 1.0
          */
         if (mediaElement.volume <= 0.9) {
             mediaElement.volume += 0.1;
@@ -173,14 +159,13 @@ window.onload = function() {
 
     var decreaseVolume = function(mediaElement) {
         /*
-         * TODO: Decrease the volume property of the media element ONLY when it
-         * is safe (don't go lower than a volume of 0.0 because that will cause
-         * an error) and set the volume to 0.0 if the current volume is too
-         * close to 0.0
+         * Volume property of the media element is decreased
+         * ONLY when it is higher than 0.0
+         * Volume is set to 0.0 if the current volume is too close to 0.0
          */
         if (mediaElement.volume >= 0.1) {
             mediaElement.volume -= 0.1;
-        } else { 
+        } else {
             mediaElement.volume = 0.0;
         }
         console.log("volume", mediaElement.volume);
