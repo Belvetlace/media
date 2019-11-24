@@ -154,6 +154,10 @@ window.onload = function() {
          * is loweer than 1.0
          * Volume is set to 1.0 if the current volume is too close to 1.0
          */
+        if (mediaElement.muted) {
+            mediaElement.muted = false;
+            mediaElement.volume = 0.0;
+        }
         if (mediaElement.volume <= 0.9) {
             mediaElement.volume = (mediaElement.volume*10 + 0.1*10)/10;
         } else {
