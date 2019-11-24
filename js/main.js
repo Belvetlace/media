@@ -108,7 +108,7 @@ window.onload = function() {
         } else {
             video.pause();
         }
-
+        //syncPlayOrPauseButtonWithMedia called through event listner handlers
         //syncPlayOrPauseButtonWithMedia(video, this);
     };
 
@@ -119,7 +119,8 @@ window.onload = function() {
         } else {
             audio.pause();
         }
-        syncPlayOrPauseButtonWithMedia(audio, this);
+        //syncPlayOrPauseButtonWithMedia called through event listner handlers
+        //syncPlayOrPauseButtonWithMedia(audio, this);
     };
 
     var stop = function(mediaElement) {
@@ -136,7 +137,6 @@ window.onload = function() {
          * audio's play/pause button's set to 'Play' by event listeners.
          */
         stop(video);
-
     };
 
     stopAudioButton.onclick = function(event) {
@@ -145,7 +145,6 @@ window.onload = function() {
          * audio's play/pause button's set to 'Play' by event listeners.
          */
         stop(audio);
-
     };
 
     var increaseVolume = function(mediaElement) {
@@ -164,8 +163,6 @@ window.onload = function() {
             mediaElement.volume = 1.0;
         }
         console.log("volume", mediaElement.volume);
-
-
     };
 
     increaseVideoVolumeButton.onclick = function(event) {
