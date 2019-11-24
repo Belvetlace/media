@@ -15,6 +15,7 @@
  * Then start below with the "TODO: DO THIS FIRST" section.
  */
 
+
 window.onload = function() {
     "use strict";
     // Getting the media elements
@@ -35,59 +36,70 @@ window.onload = function() {
             .getElementById("decreaseVideoVolumeButton");
     var decreaseAudioVolumeButton = document
             .getElementById("decreaseAudioVolumeButton");
-    
+
+
+
     var syncPlayOrPauseButtonWithMedia = function(mediaElement, button) {
         /*
          * button's innerHTML set to 'Pause' or 'Play' depending on if
          * the media element is paused or not.
-        */
-        button.innerHTML = (mediaElement.paused) ? "Play" : "Pause";
+         */
+        button.innerHTML = (mediaElement.paused) ? 'Play' : 'Pause';
         console.log("syncPlayOrPauseButtonWithMedia called " + mediaElement + " " + button);
     };
-    
+
     var mediaIsPlayingOrJustPaused = function(event) {
-        console.log("mediaIsPlayingOrJustPaused called with event:", event);
+        console.log("mediaIsPlayingOrJustPaused called with event:", event.type, event.target.id);
         /*
          * when the media is playing or just paused calls
          * syncPlayOrPauseButtonWithMedia with parameters (mediaElement, button)
          */
-        if (event.id === "video") {
-            syncPlayOrPauseButtonWithMedia(event, playOrPauseVideoButton);
+        if (event.target.id === 'video'){
+            syncPlayOrPauseButtonWithMedia(event.target, playOrPauseVideoButton);
         } else {
-            syncPlayOrPauseButtonWithMedia(event, playOrPauseAudioButton);
+            syncPlayOrPauseButtonWithMedia(event.target, playOrPauseAudioButton);
         }
+
     };
-    
-       var mediaHasJustEnded = function(event) {
+
+    var mediaHasJustEnded = function(event) {
         console.log("mediaHasJustEnded called with event:", event);
         /*
          * appropriate button's content is set to 'Play' by calling
          * syncPlayOrPauseButtonWithMedia with parameters: (mediaElement, button).
          */
         event.target.currentTime = 0;
-        if (event.target.id === "video") {
+        if (event.target.id === 'video') {
             syncPlayOrPauseButtonWithMedia(event.target, playOrPauseVideoButton);
         } else {
             syncPlayOrPauseButtonWithMedia(event.target, playOrPauseAudioButton);
         }
     };
 
-     /*
-      * Binding video and audio elements
-      * call mediaIsPlayingOrJustPaused(event) in reaction to 'play' and 'pause' events
-      * and call our mediaHasJustEnded(event) in reaction to the 'ended' event.
+    /*
+     * Binding video and audio elements
+     * call mediaIsPlayingOrJustPaused(event) in reaction to 'play' and 'pause' events
+     * and call our mediaHasJustEnded(event) in reaction to the 'ended' event.
      */
+    //funcion for video event listeners
+    var videoEventHandlerFunct = function(event) {
+        console.log("The " + this.id + " media object is " + event.type + ".");
+        mediaIsPlayingOrJustPaused(event);
+    };
     //video event listeners
-    video.addEventListener("play", function(){ mediaIsPlayingOrJustPaused(this); }, false);
-    video.addEventListener("pause", function(){ mediaIsPlayingOrJustPaused(this); }, false);
-    video.addEventListener("ended", function(){ mediaHasJustEnded(this); }, false);
-    
-    //audio event listeners
-    audio.addEventListener("play", function(){ mediaIsPlayingOrJustPaused(this); }, false);
-    audio.addEventListener("pause", function(){ mediaIsPlayingOrJustPaused(this); }, false);
-    audio.addEventListener("ended", function(){ mediaHasJustEnded(this); }, false);
+    video.addEventListener('play', videoEventHandlerFunct, false);
+    video.addEventListener('pause', videoEventHandlerFunct, false);
+    video.addEventListener('ended', mediaHasJustEnded, false);
 
-    
+    //funcion for audio event listeners
+    var audioEventHandlerFunct = function(event) {
+        console.log("The " + this.id + " media object is " + event.type + ".");
+        mediaIsPlayingOrJustPaused(event);
+    };
+    //audio event listeners
+    audio.addEventListener('play', audioEventHandlerFunct, false);
+    audio.addEventListener('pause', audioEventHandlerFunct, false);
+    audio.addEventListener('ended', mediaHasJustEnded, false);
     
     playOrPauseVideoButton.onclick = function(event) {
         // video is set to play or pause on button click
@@ -96,7 +108,8 @@ window.onload = function() {
         } else {
             video.pause();
         }
-        syncPlayOrPauseButtonWithMedia(video, this);
+
+        //syncPlayOrPauseButtonWithMedia(video, this);
     };
 
     playOrPauseAudioButton.onclick = function(event) {
@@ -119,11 +132,11 @@ window.onload = function() {
 
     stopVideoButton.onclick = function(event) {
         /*
-         * media element is stopped by calling stop(mediaElement).
-         * video's play/pause button's set to 'Play' by event listeners.
+         * media element stopped by calling stop(mediaElement).
+         * audio's play/pause button's set to 'Play' by event listeners.
          */
         stop(video);
-        //playOrPauseVideoButton.innerHTML = "Play";
+
     };
 
     stopAudioButton.onclick = function(event) {
@@ -132,7 +145,7 @@ window.onload = function() {
          * audio's play/pause button's set to 'Play' by event listeners.
          */
         stop(audio);
-        //playOrPauseAudioButton.innerHTML = "Play";
+
     };
 
     var increaseVolume = function(mediaElement) {
@@ -142,11 +155,13 @@ window.onload = function() {
          * Volume is set to 1.0 if the current volume is too close to 1.0
          */
         if (mediaElement.volume <= 0.9) {
-            mediaElement.volume += 0.1;
+            mediaElement.volume = (mediaElement.volume*10 + 0.1*10)/10;
         } else {
             mediaElement.volume = 1.0;
         }
         console.log("volume", mediaElement.volume);
+
+
     };
 
     increaseVideoVolumeButton.onclick = function(event) {
@@ -164,7 +179,7 @@ window.onload = function() {
          * Volume is set to 0.0 if the current volume is too close to 0.0
          */
         if (mediaElement.volume >= 0.1) {
-            mediaElement.volume -= 0.1;
+            mediaElement.volume = (mediaElement.volume*10 - 0.1*10)/10;
         } else {
             mediaElement.volume = 0.0;
         }
