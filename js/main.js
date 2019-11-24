@@ -134,7 +134,7 @@ window.onload = function() {
     stopVideoButton.onclick = function(event) {
         /*
          * media element stopped by calling stop(mediaElement).
-         * audio's play/pause button's set to 'Play' by event listeners.
+         * video's play/pause button's set to 'Play' by event listeners.
          */
         stop(video);
     };
@@ -149,15 +149,17 @@ window.onload = function() {
 
     var increaseVolume = function(mediaElement) {
         /*
-         * Volume property of the media element  increased ONLY when it
-         * is loweer than 1.0
+         * Volume property of the media element increased ONLY when it is loweer than 1.0
          * Volume is set to 1.0 if the current volume is too close to 1.0
          */
+        // check if media was muted by built in buttons
+        // if not unmuted before, our buttons do not change the volume
         if (mediaElement.muted) {
             mediaElement.muted = false;
             mediaElement.volume = 0.0;
         }
         if (mediaElement.volume <= 0.9) {
+            // calculations added to adjust volume in equal increments of 0.1
             mediaElement.volume = (mediaElement.volume*10 + 0.1*10)/10;
         } else {
             mediaElement.volume = 1.0;
@@ -180,6 +182,7 @@ window.onload = function() {
          * Volume is set to 0.0 if the current volume is too close to 0.0
          */
         if (mediaElement.volume >= 0.1) {
+            // calculations added to adjust volume in equal increments of 0.1
             mediaElement.volume = (mediaElement.volume*10 - 0.1*10)/10;
         } else {
             mediaElement.volume = 0.0;
